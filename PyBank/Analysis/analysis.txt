@@ -1,6 +1,2 @@
 Financial Analysis
 ------------------------------
-Total Months: 
-Average Change: 
-Greatest Increase in Profits: 
-Greatest Decrease in Profits: 
