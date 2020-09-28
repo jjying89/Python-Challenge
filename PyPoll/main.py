@@ -18,6 +18,8 @@ candidates=[]
 with open(election_csv, newline="") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     
+    next(csv_reader)
+
     for column in csv_reader:
         votes.append(column[0])
         candidates.append(column[2])
