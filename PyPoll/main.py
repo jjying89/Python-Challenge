@@ -18,8 +18,10 @@ candidates=[]
 with open(election_csv, newline="") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     
+    #skip header
     next(csv_reader)
 
+    #append list
     for column in csv_reader:
         votes.append(column[0])
         candidates.append(column[2])
@@ -70,6 +72,8 @@ with open(election_csv, newline="") as csvfile:
     print("------------------")
     print("Winner " + str(winner))
 
+
+#output results
 with open(election_analysis, 'w') as txtfile:
     txtfile.write("Election Results\n")
     txtfile.write("------------------\n")
