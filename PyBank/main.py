@@ -2,123 +2,82 @@
 import os
 import csv
 
-#find file
+#find data
 budget_data = os.path.join('Resources','budget_data.csv')
 
-#set analysis variables
-totalmonths=[]
-totalprofit=[]
-avgchange=[]
-greatestincrease=[]
-greatestdecrease=[]
+#output analysis
+budget_analysis = os.path.join("Analysis", "analysis.txt")
+
+#set analysis variables/list
+totalmonths=0
+totalprofit=0
+date=[]
+profitandlosses=[]
 
 
-#find total p&l
+#open csv
 with open(budget_data, newline="") as csvfile:
-        csvreader = csv.reader(csvfile, delimiter=",")
-        #skip header row
-        next(csvreader, None) 
-
-        # Gets number of rows in csv
-        data=list(csvreader)
-
-        row_count = len(data)
-        
-        print(row_count)
-
-
-#read csvfile
-with open(budget_data, 'r') as csvfile:
-
-    budgetreader = csv.reader(csvfile, delimiter=',')
-
-    print(budgetreader)
-
-    #read header
-    csv_header = next(budgetreader)
-    print(f"CSV Header: {csv_header}")
-
-    # Read each row of data after the header
-    for row in budgetreader:
-        print(row)
-
-
-
-
-
-
-
-#find total months  
-file = open(budget_data)
-reader = csv.reader(file)
-next(reader)#skip header
-totalmonths= len(list(reader))
-print(totalmonths)
-
-
-# Specify the file to write to
-budget_analysis = os.path.join('Analysis', 'analysis.txt')
-
-with open(budget_analysis, 'w') as csvfile:
-
-    # Initialize csv.writer
-    csvwriter = csv.writer(csvfile, delimiter=',')
-
-    # Write the first row (column headers)
-    csvwriter.writerow(['Financial Analysis'])
-
-    # Write the second row and etc
-    csvwriter.writerow(['------------------------------'])
-    csvwriter.writerow(['Total Months:'+ totalmonths])
-    csvwriter.writerow(['Average Change: '])
-    csvwriter.writerow(['Greatest Increase in Profits: '])
-    csvwriter.writerow(['Greatest Decrease in Profits: '])
-
-
-#find total profit/losses
-cr = csv.reader(open(budget_data,"rb"))
-cr.next() # to skip the header 
-#error//       print sum(int(x[2])) for x in cr
-
-
-
-
-with open(budget_data, "rb") as csv_file:
-    reader = csv.DictReader(csv_file)
-    total = sum(float(row["Profit/Losses"]) for row in reader)
-print(total)
-
-
-
-with open(budget_data) as fin:
-    fin.next()
-    total = sum(int(r[1]) for r in csv.reader(fin))
-    print(total)
-
-
+    csv_reader = csv.reader(csvfile, delimiter=',')
     
-#find total months FAILED    
-months = len(list(budget_data))
-print(months)
+    #skip header
+    next(csv_reader)
 
+    #append list
+    for column in csv_reader:
+        date.append(column[0])
+        profitandlosses.append(column[1])
 
-#find total months FAILED
-with open(budgetreader, 'r') as f:
-    reader = csv.reader(f)
-    first_col_len = len(next(zip(*reader)))
+    #find total months
+    totalmonths = len(date)
+    print(totalmonths)
+    
+    #find total profit
+    profit = map(int, profitandlosses)
+    totalprofit = sum(profit)
+    print(totalprofit)
 
+#find average profit
+#set additional variables/list
+monthlychange = 0
+totalchange=0
+averageprofit = 0
+i = 0
+monthlychanges = []
+    
+for i in range(len(profitandlosses)-1):
+    monthlychange = int(profitandlosses[i+1]) - int(profitandlosses[(i)])   
+    monthlychanges.append(monthlychange)            
+    totalchange = totalchange + monthlychange
+    averageprofit = totalchange / (totalmonths-1) #dividing by 1 month less
+    formatted_averageprofit = "{:.2f}".format(averageprofit) #make it 2 decimal places
 
+    #finding greatest increase
+    gincrease = max(monthlychanges)
+    g_index = monthlychanges.index(gincrease)
+    gincrease_date = date[g_index+1] #plus 1 to get correct month
 
+    #finding greatest decrease
+    gdecrease = min(monthlychanges)
+    g_index = monthlychanges.index(gdecrease)
+    gdecrease_date = date[g_index+1] #plus 1 to get correct month
 
+#print results
+print("Financial Analysis")
+print("------------------")
+print("Total Months: " + str(totalmonths))
+print("Total: $" + str(totalprofit))
+print(f"Average Change: ${formatted_averageprofit}")
+print(f"Greatest Increase in Profits: {gincrease_date}({gincrease})")
+print(f"Greatest Decrease in Profits: {gdecrease_date}({gdecrease})")
 
-
-
-
-
-
-
-
-
-
+#output results to analysis
+with open(budget_analysis, 'w') as txtfile:
+    txtfile.write("Financial Analysis\n")
+    txtfile.write("------------------\n")
+    txtfile.write("Total Months: " + str(totalmonths) +"\n")
+    txtfile.write("Total: $" + str(totalprofit) + "\n")
+    txtfile.write(f"Average Change: ${formatted_averageprofit}\n")
+    txtfile.write(f"Greatest Increase in Profits: {gincrease_date}({gincrease})\n")
+    txtfile.write(f"Greatest Decrease in Profits: {gdecrease_date}({gdecrease})\n")
 
 
