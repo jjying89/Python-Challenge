@@ -3,7 +3,7 @@
 There are 2 challenges in this repository.
 
 PyBank
-Creating a Python script for analyzing financial records.
+-Creating a Python script for analyzing financial records.
 
 PyPoll
-Helping a small, rural town modernize its vote counting process.
+-Helping a small, rural town modernize its vote counting process.
