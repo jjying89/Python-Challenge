@@ -2,8 +2,8 @@
 
 There are 2 challenges in this repository.
 
-# PyBank
+PyBank
 Creating a Python script for analyzing financial records.
 
-# PyPoll
+PyPoll
 Helping a small, rural town modernize its vote counting process.
