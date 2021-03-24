@@ -1,6 +1,6 @@
 # python-challenge
 
-There are 2 challenges in this repository.
+There are 2 different datasets in this repository with the following challenges below:
 
 ## PyBank
 
